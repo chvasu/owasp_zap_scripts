@@ -8,4 +8,4 @@ Note: ZAP must be pre-installed and running on specific port. You have to edit t
 
 ## [Python] Command to run the scripts
 Note: Python must be pre-installed prior to running the script.
-$python3 Python/traditional_spidering.py
+''' $python3 Python/traditional_spidering.py '''
