@@ -1,7 +1,11 @@
-# owasp_zap_scripts
+# Following are the scripts to be used to perform the following tasks using OWASP ZAP
+1. Traditional Spidering
+2. AJAX Spidering
+3. Passive Scan
+4. Active Scan
 
-Note 1: ZAP must be pre-installed and running on specific port. You have to edit the Python script to update the ZAP listening port, if the port is not 9090.
-Note 2: Python must be pre-installed prior to running the script.
+Note: ZAP must be pre-installed and running on specific port. You have to edit the Python script to update the ZAP listening port, if the port is not 9090.
 
-*Command to run the scripts
-$python3 traditional_spidering.py
+## [Python] Command to run the scripts
+Note: Python must be pre-installed prior to running the script.
+$python3 Python/traditional_spidering.py
