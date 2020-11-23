@@ -18,7 +18,7 @@ import os
 opts = Options()
 opts.headless = True
 
-PROXY = "localhost:9091"
+PROXY = "localhost:9090"
 webdriver.DesiredCapabilities.FIREFOX['proxy'] = {
     "httpProxy": PROXY,
     "ftpProxy": PROXY,
