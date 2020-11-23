@@ -1,4 +1,4 @@
-#Author: Viswanath S Chirravuri
+#Author: Viswanath S Chirravuri (chvasu)
 #Date: November 23, 2020
 
 #This python script will perform unauthenticated traditional spidering on a given target website
