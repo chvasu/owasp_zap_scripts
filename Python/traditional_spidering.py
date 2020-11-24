@@ -1,20 +1,20 @@
-#Author: Viswanath S Chirravuri (chvasu)
-#Date: November 23, 2020
+# Author: Viswanath S Chirravuri (chvasu)
+# Date: November 23, 2020
 
-#This python script will perform unauthenticated traditional spidering on a given target website
-#Pre-requisite: Python must be installed AND ZAP must be started and running on a listening port (like 8080 or 9090, etc.)
+# This python script will perform unauthenticated traditional spidering on a given target website
+# Pre-requisite: Python must be installed AND ZAP must be started and running on a listening port (like 8080 or 9090, etc.)
 
-#If ZAP is not started yet, run the below command to start it (On LInux). This is a cross platform package so it can be used on Windows or MAC as well.
-#$wget https://github.com/zaproxy/zaproxy/releases/download/v2.9.0/ZAP_2.9.0_Crossplatform.zip
-#$unzip ZAP_2.9.0_Crossplatform.zip && cd ZAP_2.9.0
-#$./zap.sh -host 0.0.0.0 -port 9090 -daemon -config api.key=mysecretapikey -nostdout -addonupdate -addoninstall ascanrulesBeta -addoninstall sqliplugin -addoninstall pscanrulesBeta -addoninstall ascanrulesAlpha -addoninstall domxss -addoninstall pscanrulesAlpha -addoninstall ascanrules -addoninstall pscanrules -addoninstall fuzzdb -addoninstall directorylistv2_3 -addoninstall directorylistv2_3_lc & 
+# If ZAP is not started yet, run the below command to start it (On LInux). This is a cross platform package so it can be used on Windows or MAC as well.
+# $wget https://github.com/zaproxy/zaproxy/releases/download/v2.9.0/ZAP_2.9.0_Crossplatform.zip
+# $unzip ZAP_2.9.0_Crossplatform.zip && cd ZAP_2.9.0
+# $./zap.sh -host 0.0.0.0 -port 9090 -daemon -config api.key=mysecretapikey -nostdout -addonupdate -addoninstall ascanrulesBeta -addoninstall sqliplugin -addoninstall pscanrulesBeta -addoninstall ascanrulesAlpha -addoninstall domxss -addoninstall pscanrulesAlpha -addoninstall ascanrules -addoninstall pscanrules -addoninstall fuzzdb -addoninstall directorylistv2_3 -addoninstall directorylistv2_3_lc &
 
-#Official documentation on this script is available at https://github.com/zaproxy/zap-api-python/blob/master/src/examples/zap_example_api_script.py
+# Official documentation on this script is available at https://github.com/zaproxy/zap-api-python/blob/master/src/examples/zap_example_api_script.py
 
-#Install Python implementation of OWASP ZAP API (if it is not already done)
-#pip3 install python-owasp-zap-v2.4
+# Install Python implementation of OWASP ZAP API (if it is not already done)
+# pip3 install python-owasp-zap-v2.4
 
-#!/usr/bin/env python3
+# !/usr/bin/env python3
 import time
 from zapv2 import ZAPv2 as ZAP
 from pprint import pprint
@@ -27,7 +27,7 @@ apiKey = 'mysecretapikey'
 zap = ZAP(apikey=apiKey)
 
 # By default ZAP API client will connect to port 8080
-# Use the line below if ZAP is not listening on port 8080, for example, if listening on port 8090
+# Use the line below if ZAP is not listening on port 8080, for example, if listening on port 9090
 print("Started ZAP Scan")
 zap = ZAP(apikey=apiKey, proxies={'http': 'http://127.0.0.1:9090', 'https': 'http://127.0.0.1:9090'})
 
@@ -36,7 +36,7 @@ isNewSession = True
 # MANDATORY. ZAP Session name
 sessionName = 'myappsession'
 
-#Actual spidering starts here
+# Actual spidering starts here
 print('Spidering target {}'.format(target))
 
 # The scan returns a scan id to support concurrent scanning
@@ -49,4 +49,26 @@ while int(zap.spider.status(scanID)) < 100:
 print('Spider has completed!')
 
 # Optionally, print the URLs the spider has crawled
-#print('\n'.join(map(str, zap.spider.results(scanID))))
+# print('\n'.join(map(str, zap.spider.results(scanID))))
+
+#Passive scan begin
+while (int(zap.pscan.records_to_scan) > 0):
+      print ('Records to passive scan : {}'.format(zap.pscan.records_to_scan))
+      time.sleep(2)
+
+print ('Passive Scan completed')
+
+# Active scan begin
+print ('Active Scanning target {}'.format(target))
+scanid = zap.ascan.scan(target)
+while (int(zap.ascan.status(scanid)) < 100):
+    # Loop until the scanner has finished
+    print ('Scan progress %: {}'.format(zap.ascan.status(scanid)))
+    time.sleep(5)
+print ('Active Scan completed')
+
+# Report the results
+
+print ('Hosts: {}'.format(', '.join(zap.core.hosts)))
+print ('Alerts: ')
+pprint (zap.core.alerts())
