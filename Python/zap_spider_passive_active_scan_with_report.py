@@ -18,9 +18,10 @@
 import time
 from zapv2 import ZAPv2 as ZAP
 from pprint import pprint
+import requests
 
 # The URL of the application to be tested
-target = 'https://demo.testfire.net/'
+target = 'http://redacted.com/'
 
 # Change to match the API key set in ZAP, or use None if the API key is disabled
 apiKey = 'mysecretapikey'
@@ -51,6 +52,23 @@ print('Spider has completed!')
 # Optionally, print the URLs the spider has crawled
 # print('\n'.join(map(str, zap.spider.results(scanID))))
 
+#Ajax spider begin
+print('Ajax Spider target {}'.format(target))
+scanID = zap.ajaxSpider.scan(target)
+
+timeout = time.time() + 60   # 1 minute from now
+# Loop until the ajax spider has finished or the timeout has exceeded
+while zap.ajaxSpider.status == 'running':
+    if time.time() > timeout:
+        break
+    print('Ajax Spider status: ' + zap.ajaxSpider.status)
+    time.sleep(2)
+
+print('Ajax Spider completed')
+ajaxResults = zap.ajaxSpider.results(start=0, count=10)
+#Ajax spider end
+
+
 #Passive scan begin
 while (int(zap.pscan.records_to_scan) > 0):
       print ('Records to passive scan : {}'.format(zap.pscan.records_to_scan))
@@ -58,7 +76,6 @@ while (int(zap.pscan.records_to_scan) > 0):
 
 print ('Passive Scan completed')
 
-# Active scan begin
 print ('Active Scanning target {}'.format(target))
 scanid = zap.ascan.scan(target)
 while (int(zap.ascan.status(scanid)) < 100):
@@ -67,8 +84,12 @@ while (int(zap.ascan.status(scanid)) < 100):
     time.sleep(5)
 print ('Active Scan completed')
 
-# Report the results
-
-print ('Hosts: {}'.format(', '.join(zap.core.hosts)))
-print ('Alerts: ')
-pprint (zap.core.alerts())
+# Report the results / Generate report
+headers = {
+  'Accept': 'application/json',
+  'X-ZAP-API-Key': 'mysecretapikey'
+}
+r = requests.get('http://localhost:9090/OTHER/core/other/htmlreport/', params={
+}, headers = headers)
+with open("report.html", "w", encoding="utf-8") as f:
+    f.write(r.text)
