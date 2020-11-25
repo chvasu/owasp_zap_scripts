@@ -72,7 +72,7 @@ public class Java_ZAP_Client {
 	            System.out.println("Active Scan complete");
 
 	            System.out.println("Alerts:");
-	            System.out.println(new String(api.core.xmlreport(), StandardCharsets.UTF_8));
+	            System.out.println(new String(api.core.htmlreport(), StandardCharsets.UTF_8));
 
 	        } catch (Exception e) {
 	            System.out.println("Exception : " + e.getMessage());
