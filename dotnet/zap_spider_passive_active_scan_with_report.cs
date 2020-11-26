@@ -1,5 +1,8 @@
 # Author: Viswanath S Chirravuri (chvasu)
 # Date: November 23, 2020
+#This code is forked from https://github.com/zaproxy/zap-api-dotnet/blob/master/src/OWASPZAPDotNetAPI/OWASPZAPDotNetAPI.Samples/SimplePointAndClickScan.cs
+#Installing DOTNET SDK for ZAP using a Package manager
+# PM> Install-Package OWASPZAPDotNetAPI -Version 2.8.0
 
 using OWASPZAPDotNetAPI;
 using System;
