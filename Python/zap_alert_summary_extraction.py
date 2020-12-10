@@ -1,8 +1,8 @@
 # Author: Viswanath S Chirravuri (chvasu)
 # Date: November 23, 2020
 
-# This python script will perform unauthenticated traditional spidering on a given target website
-# Pre-requisite: Python must be installed AND ZAP must be started and running on a listening port (like 8080 or 9090, etc.)
+# This python script will get summary of scan alerts after the successful scan of the target website
+# Pre-requisite: Python must be installed AND ZAP must be started and running on a listening port (like 8080 or 9090, etc.). ZAP must perform the passive scan.
 
 # If ZAP is not started yet, run the below command to start it (On LInux). This is a cross platform package so it can be used on Windows or MAC as well.
 # $wget https://github.com/zaproxy/zaproxy/releases/download/v2.9.0/ZAP_2.9.0_Crossplatform.zip
