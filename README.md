@@ -1,5 +1,5 @@
 #Feature branch
-# Following are the scripts to be used to perform the following tasks using OWASP ZAP - by Viswanath
+# Following are the scripts to be used to perform the following tasks using OWASP ZAP
 1. Traditional Spidering
 2. AJAX Spidering
 3. Passive Scan
